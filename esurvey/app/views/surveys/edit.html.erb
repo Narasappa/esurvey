@@ -1,0 +1,14 @@
+<div class="page-header">
+  <%= link_to surveys_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to @survey, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+  <h3 class="text-info"><u><b>Editing Survey</b></u></h3>
+
+</div>
+
+<%= render 'form' %>

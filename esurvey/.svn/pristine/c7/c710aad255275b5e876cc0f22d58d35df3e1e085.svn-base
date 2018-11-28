@@ -1,0 +1,14 @@
+class ServiceController < ApplicationController
+
+
+	def  get_mp_constituencies_of_state
+         mp_constituencies= MpConstituency.find_all_by_state_id(params[:state_id])
+         render :json=>{:mp_constituencies=>mp_constituencies}
+	end
+
+
+	def get_mla_constituencies_of_mp_constituency
+         mla_constituencies = MlaConstituency.find_all_by_district_id(params[:district_id])
+         render :json=>{:mla_constituencies=>mla_constituencies}
+	end
+end

@@ -1,0 +1,112 @@
+<div class="page-header">
+  <%= link_to surveys_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_survey_path(@survey), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+
+
+   <%= link_to 'view & add Sureveyor',{:action=>"listsurveyor",:id=>@survey.id},{ class: 'btn btn-primary'} %>
+  
+  <h2 class="text-info"><u><b>Show survey</b></u></h2>
+
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Name:</dt>
+  <dd><%= @survey.name %></dd>
+
+  <dt>User:</dt>
+  <dd><%= @survey.user.first_name %></dd>
+
+  
+ <% if  @survey.survey_scale.to_i == 1 %>
+  <dt>Scale weightage:</dt>
+  <dd><%= @survey.scale_weightage %> Scale</dd>
+  <% else %>
+
+  <dt>Merit weightage:</dt>
+   <% @merit_template = @survey.merit_template %> 
+  <dd><%= @merit_template.template_name %></dd>
+  <% end %>
+
+  <dt>Political party:</dt>
+  <dd><%= @survey.political_party.name %></dd>
+
+  <dt>State:</dt>
+  <dd><%= @survey.state.state_name %></dd>
+
+  <dt>MP Constituency:</dt>
+  <dd><%= @survey.mp_constituency.constituency_name %></dd>
+
+  <dt>MLA Constituency:</dt>
+  <dd><%= @survey.mla_constituency.constituency_name %></dd>
+
+</dl>
+ 
+<h3 class="text-info"><u><b>Survey Based Questions and Preview</b></u></h3>
+<hr>
+ <% if @survey.merit_template_id.nil? %>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr class="bg-info">
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Preview Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @survey.questions.each_with_index do |question,index| %>
+        <tr>
+            <td><%= index+=1%></td>
+            <td><%= question.name %></td>
+            <td><%= select_tag "marks_reviewd",options_for_select((0..@survey.scale_weightage).to_a.map{|a|
+              [a,a]},rand(0..@survey.scale_weightage)) %></td>
+         </tr> 
+     <% end %>
+    </tbody>
+  </table>
+
+  <% else %>
+
+  <h3 class="text-danger"> From Merit Based </h3>
+
+    <div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr class="bg-info">
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Preview Value</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @merit_template_subjects = @merit_template.merit_template_subjects %>
+      <% length = @merit_template.merit_template_subjects.length %>
+
+      <% @survey.questions.each_with_index do |question,index| %>
+        <tr>
+            <td><%= index+=1%></td>
+            <td><%= question.name %> </td>
+            <td>
+               <% selected = rand(0..length-1) %>
+              <% @merit_template_subjects.each_with_index do |merit_template_subject,index2| %>
+
+               <% if index2 == selected %> 
+              
+             <%= radio_button_tag index.to_s,merit_template_subject.subject_marks,true %>  <span class="text-danger"><%=merit_template_subject.subject_name%></span>&nbsp;
+              <% else %>
+              <%= radio_button_tag index.to_s,merit_template_subject.subject_marks,false %>  <%=merit_template_subject.subject_name %>&nbsp;
+                 <% end %>
+               <% end %>
+            </td>
+         </tr> 
+     <% end %>
+    </tbody>
+  </table>
+  <% end %>

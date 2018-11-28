@@ -1,0 +1,2 @@
+module MeritTemplatesHelper
+end

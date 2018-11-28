@@ -1,0 +1,10 @@
+<div class="page-header">
+  <%= link_to interviews_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <h3 class="text-info"><u><b>New interview </b></u></h3>
+
+</div>
+
+<%= render 'form' %>

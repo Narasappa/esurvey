@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  survey_type: 
+  scale_weightage: 1
+  merit_weightage: MyText
+  political_party: 
+  survey_scale: MyString
+
+two:
+  name: MyString
+  survey_type: 
+  scale_weightage: 1
+  merit_weightage: MyText
+  political_party: 
+  survey_scale: MyString

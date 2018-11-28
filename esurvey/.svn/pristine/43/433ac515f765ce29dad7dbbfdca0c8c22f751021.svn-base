@@ -1,0 +1,123 @@
+<div class="row">
+<div class="table-responsive">
+  <table class="table table-bordered table-stripped">
+    <thead>
+       <tr class="bg-info">
+         <th>Serial.No</th>
+         <th>Town/Village</th>
+         <th> No of Interview </th>
+         <th>Total Score</th>
+         <th>Surveyor</th>
+       <tr>
+    </thead>
+     <tbody>
+      <% total_score = 0  %>
+      <% total_persons = 0%>
+     	<% survey_result.each_with_index do  |survey_result,index|%>
+     	<tr>
+     		<td><%= index+1 %></td>
+            <td><%= survey_result.town_name%></td>
+            <td><%= survey_result.count %></td>
+            <% total_persons+=survey_result.count.to_f %>
+            <% total_score+=survey_result.total_score.to_f*100/(survey_result.count.to_f*max_score.to_f) %>
+            <td><%= survey_result.total_score.to_f*100/(survey_result.count.to_f*max_score.to_f) %> % </td>
+            <td><%= survey_result.surveyor %></td>
+
+       </tr>
+
+
+       <% end %>
+       
+     </tbody>
+  </table>
+ </div>
+</div>
+
+<hr>
+<div class="row">
+  <h4 class="text-danger">Result Anlayis of <%= raw survey_result.first.town_name %> Town Village Report </h4>
+  <div class="table-responsive">
+  <table class="table table-bordered table-stripped">
+    <thead>
+       <tr class="bg-info">
+         <th>Serial.No</th>
+         <th>Question </th>
+         <th>Percentage </th>
+         <th>Analysis</th>
+      <tr>
+    </thead>
+      <tbody>
+    <% qts.each_with_index do |qt,index| %>
+       <tr>
+         <td><%= index+1 %></td>
+          <td><%= qt.name %></td>
+          <% calculated_result =  qt.total_score.to_f*100/(qt.count.to_f*qts_max_score.to_f) %>
+          <td> <%= calculated_result.round(2) %> %</td>
+          <% if calculated_result <= 25 %>
+           <td> Need Extra Serious Effort to be addressed</td>
+           <% elsif calculated_result >25 && calculated_result <= 50 %>
+            <td> Need Serious Effort to be addressed</td>   
+              <% elsif calculated_result >50 && calculated_result <= 75 %>
+               <td> Need Little Effort to be addressed</td>
+              <% else %>
+              <td> Be relaxed</td>
+              <% end %>
+       </tr>
+      <% end %>
+     </tbody>
+   </table>  
+</div>    
+
+<hr>
+<div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+<script type="text/javascript">
+ $(document).ready(function(){
+
+$("div#container2").highcharts({
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: " Graphical Representation of  <%= raw survey_result.first.town_name %> Town Village Report"
+    },
+    subtitle: {
+        text: 'Voting Rate(%)'
+    },
+    xAxis: {
+        categories: <%= raw qts.map{|rs| rs.name} %>,
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Voting(%)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: <%= raw  "'"+survey.name+"'" %>,
+        data: <%= raw qts.map{|rs| rs.total_score.to_f*100/(rs.count.to_f*qts_max_score.to_f)} %>
+
+    }]
+});
+
+ })
+
+
+
+</script>

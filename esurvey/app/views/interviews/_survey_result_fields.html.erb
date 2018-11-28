@@ -1,0 +1,43 @@
+<% if @interview.survey.merit_template_id.nil? %>
+<tr class="fields" >
+<td>
+<%= f.text_field :question_id, class: "form-control hide" %>
+<%= f.object.question.name %>
+</td>
+
+<td >
+<%= f.select :survey_marks,(0..@survey1.scale_weightage.to_i).to_a.map{|w| [w,w]},{}, class: "form-control" %>
+</td>
+
+
+  
+</tr>
+<% else %>
+<tr class="fields" >
+<td>
+
+<%= f.object.question.name %>
+   <input class="input-xs hide" id="interview_survey_results_attributes_<%=f.object.id%>_survey_marks" name="interview[survey_results_attributes][<%=f.object.id%>][question_id]" type="text" value="<%= f.object.question_id %>" >
+   <input class="input-xs hide" id="interview_survey_results_attributes_<%=f.object.id%>_id" name="interview[survey_results_attributes][<%=f.object.id%>][id]" type="text" value="<%= f.object.id %>" 
+
+</td>
+
+
+<td>
+
+
+	<% @interview.survey.merit_template.merit_template_subjects.each_with_index do |merit_template_subject,index2| %>
+
+
+               <% if merit_template_subject.subject_marks == f.object.survey_marks %>
+           <input class="input-xs" id="interview_survey_results_attributes_<%=f.object.id%>_survey_marks" name="interview[survey_results_attributes][<%=f.object.id%>][survey_marks]" type="radio" value="<%= merit_template_subject.subject_marks %>" checked="checked"><span class="text-danger"><%=merit_template_subject.subject_name%></span>&nbsp;
+               <% else %>
+             <input  id="interview_survey_results_attributes_<%=f.object.id%>_survey_marks" name="interview[survey_results_attributes][<%=f.object.id%>][survey_marks]" type="radio" value="<%= merit_template_subject.subject_marks %>" > <span class="text-info"> <%=merit_template_subject.subject_name %>&nbsp;</span>
+                 <% end %>
+               <% end %>
+   </td>
+</tr>
+
+
+
+<% end %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  mobile_number: MyString
+  voter_id: MyString
+  survey: 
+
+two:
+  name: MyString
+  mobile_number: MyString
+  voter_id: MyString
+  survey: 

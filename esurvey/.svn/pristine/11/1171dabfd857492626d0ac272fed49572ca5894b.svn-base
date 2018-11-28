@@ -1,0 +1,15 @@
+<div class="page-header">
+
+<% permitted_to? :index, :interviews do %>
+  <%= link_to interviews_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+   <% end %>
+ <% end %>
+
+
+  <h3 class="text-info"><u><b>New interview </b></u></h3>
+
+</div>
+
+<%= render 'form' %>

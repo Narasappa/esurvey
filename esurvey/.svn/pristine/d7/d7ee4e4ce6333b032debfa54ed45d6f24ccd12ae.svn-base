@@ -1,0 +1,86 @@
+class MeritTemplatesController < ApplicationController
+  # GET /merit_templates
+  # GET /merit_templates.json
+  def index
+    @merit_templates = MeritTemplate.all(:include=>[:merit_template_subjects])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @merit_templates }
+    end
+  end
+
+  # GET /merit_templates/1
+  # GET /merit_templates/1.json
+  def show
+    @merit_template = MeritTemplate.find(params[:id],:include=>[:merit_template_subjects])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @merit_template }
+    end
+  end
+
+  # GET /merit_templates/new
+  # GET /merit_templates/new.json
+  def new
+    @merit_template = MeritTemplate.new
+    3.times do
+      @merit_template.merit_template_subjects.build
+    end
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @merit_template }
+    end
+  end
+
+  # GET /merit_templates/1/edit
+  def edit
+    @merit_template = MeritTemplate.find(params[:id])
+  end
+
+  # POST /merit_templates
+  # POST /merit_templates.json
+  def create
+    @merit_template = MeritTemplate.new(params[:merit_template])
+
+    respond_to do |format|
+      if @merit_template.save
+        format.html { redirect_to @merit_template, notice: 'Merit template was successfully created.' }
+        format.json { render json: @merit_template, status: :created, location: @merit_template }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @merit_template.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /merit_templates/1
+  # PUT /merit_templates/1.json
+  def update
+    @merit_template = MeritTemplate.find(params[:id])
+
+    respond_to do |format|
+      if @merit_template.update_attributes(params[:merit_template])
+        format.html { redirect_to @merit_template, notice: 'Merit template was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @merit_template.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /merit_templates/1
+  # DELETE /merit_templates/1.json
+  def destroy
+    @merit_template = MeritTemplate.find(params[:id])
+    @merit_template.destroy
+
+    respond_to do |format|
+      format.html { redirect_to merit_templates_url }
+      format.json { head :no_content }
+    end
+  end
+end

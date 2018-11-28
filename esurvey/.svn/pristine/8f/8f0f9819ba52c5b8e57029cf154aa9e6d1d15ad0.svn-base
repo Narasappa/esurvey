@@ -1,0 +1,12 @@
+
+<tr class="fields" >
+<td >
+<%= f.text_field :name, class: "form-control" %>
+</td>
+
+
+ <td ><%= link_to_remove_fields "<span class='glyphicon glyphicon-remove btn btn-sm '></span>".html_safe, f %>
+ 	</td>
+
+  
+</tr>

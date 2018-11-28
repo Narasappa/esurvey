@@ -1,0 +1,4 @@
+$("div#survey_result").html("");
+$("select#interview_mla_town_id").html("");
+$("select#interview_mla_town_id").html("<%= escape_javascript content_tag(:option,'Select Town/Village',:value=>"")+options_from_collection_for_select(@mla_towns, :id, :town_name) %>");
+$("div#survey_result").append("<%= j render('survey_result', :questions => @questions,:scale=>@scale,:survey=>@survey,:merit_based=>@merit_based,:merit_template_subjects=>@merit_template_subjects) %>");

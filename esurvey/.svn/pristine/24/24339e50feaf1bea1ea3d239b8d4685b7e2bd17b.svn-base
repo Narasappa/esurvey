@@ -1,0 +1,2 @@
+$("div#survey_result").html("");
+$("div#survey_result").append("<%= j render('survey_result', :questions => @questions,:scale=>@scale,:survey=>@survey,:merit_based=>@merit_based,:merit_template_subjects=>@merit_template_subjects) %>");

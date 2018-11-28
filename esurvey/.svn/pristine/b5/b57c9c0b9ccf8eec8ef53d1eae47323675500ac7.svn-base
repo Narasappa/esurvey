@@ -1,0 +1,80 @@
+<div class="page-header">
+  <%= link_to interviews_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_interview_path(@interview), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+
+  <h3 class="text-info"><u><b>Show interview </b></u></h3>
+  
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Name:</dt>
+  <dd><%= @interview.name %></dd>
+
+  <dt>Mobile number:</dt>
+  <dd><%= @interview.mobile_number %></dd>
+
+  <dt>Voter:</dt>
+  <dd><%= @interview.voter_id %></dd>
+
+  <dt>Survey:</dt>
+  <dd><%= @interview.survey.name %> | <%= @interview.survey.scale_weightage %></dd>
+
+</dl>
+
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr class="bg-info">
+      <th> Question </th>
+      <th> Survey Marks </th>
+      <% unless @interview.survey.merit_template_id.nil? %>
+       <th> Remarks Marks </th>
+       <% end %>
+
+
+    </tr> 
+    </thead>
+      <% total_marks = 0 %>
+    <tbody>
+     <% @interview.survey_results.each_with_index do |survey_result,index|%>
+         <tr>
+           <td><%= survey_result.question.name %></td>
+           <% if @interview.survey.merit_template_id.nil? %>
+           <td><%= survey_result.survey_marks.to_f %></td>
+           <% else %>
+             <td><%= survey_result.survey_marks.to_f %></td>
+           <td>
+             <% @interview.survey.merit_template.merit_template_subjects.each_with_index do |merit_template_subject,index2| %>
+
+               <% if merit_template_subject.subject_marks == survey_result.survey_marks %>
+           <input class="input-xs" id="interview_survey_results_attributes_<%=index%>_survey_marks" name="interview[survey_results_attributes][<%=index%>][survey_marks]" type="radio" value="<%= merit_template_subject.subject_marks %>" checked="checked"><span class="text-danger"><%=merit_template_subject.subject_name%></span>&nbsp;
+               <% else %>
+             <input  id="interview_survey_results_attributes_<%=index%>_survey_marks" name="interview[survey_results_attributes][<%=index%>][survey_marks]" type="radio" value="<%= merit_template_subject.subject_marks %>" > <span class="text-info"> <%=merit_template_subject.subject_name %>&nbsp;</span>
+                 <% end %>
+               <% end %>
+                 <!--  <%= survey_result.survey_marks %> -->
+              </td>
+            <% end %>
+           <% total_marks+= survey_result.survey_marks %>
+         </tr>
+     <% end %>
+         <tr class="bg-danger">
+           <td>Total : </td>
+           <td> <%= total_marks.to_f %></td>
+            <% unless @interview.survey.merit_template_id.nil? %>
+       <td> -- </td>
+       <% end %>
+
+          
+         </tr>
+    </tbody>
+  </table>
+</div>
+      

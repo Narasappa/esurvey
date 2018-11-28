@@ -1,0 +1,13 @@
+<div class="page-header">
+  <%= link_to political_party_users_url(@political_party), class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to political_party_user_url(@political_party,@user), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+ <h3 class="text-info"><u><b>Editing user</b></u></h3>
+</div>
+
+<%= render 'form' %>

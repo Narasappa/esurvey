@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  criteria_name: MyString
+  criteria_marks: 1
+
+two:
+  criteria_name: MyString
+  criteria_marks: 1

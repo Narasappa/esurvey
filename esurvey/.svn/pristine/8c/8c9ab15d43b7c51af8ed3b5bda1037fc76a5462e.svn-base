@@ -1,0 +1,106 @@
+<h4 class="text-danger text-center">Total Result</h4>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-stripped">
+    <thead>
+       <tr class="bg-info">
+         <th>Serial.No</th>
+         <th>Town/Village</th>
+         <th> No of Interview </th>
+         <th>Total Score</th>
+         <th>Surveyor</th>
+       <tr>
+    </thead>
+     <tbody>
+      <% total_score = 0  %>
+      <% total_persons = 0%>
+     	<% survey_result.each_with_index do  |survey_result,index|%>
+     	<tr>
+     		<td><%= index+1 %></td>
+            <td><%= link_to survey_result.town_name,{:controller=>:interviews,:action=>:calculate_survey_result_of_town,:mla_town_id=>survey_result.town_id,:survey_id=>survey.id},{:remote=>true}%></td>
+            <td><%= survey_result.count %></td>
+            <% total_persons+=survey_result.count.to_f %>
+            <% total_score+=survey_result.total_score.to_f*100/(survey_result.count.to_f*max_score.to_f) %>
+            <td><%= (survey_result.total_score.to_f*100/(survey_result.count.to_f*max_score.to_f)).round(2) %> % </td>
+            <td><%= survey_result.surveyor %></td>
+
+       </tr>
+
+
+       <% end %>
+       <tr class="bg-danger">
+             <td>Total </td>
+             <td>-- </td>
+             <td><%= total_persons.to_i %></td>
+             <td><%= (total_score/survey_result.length).round(2) %> %</td>
+             <td>----</td>
+
+       </tr>
+     </tbody>
+  </table>
+</div>
+
+<hr>
+
+
+<div id="town_result" class="row">
+
+</div>
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+
+
+<script type="text/javascript">
+ $(document).ready(function(){
+
+$("div#container").highcharts({
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Total Survey Report'
+    },
+    subtitle: {
+        text: 'Voting Rate(%)'
+    },
+    xAxis: {
+        categories: <%= raw qts.map{|rs| rs.name} %>,
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Voting(%)'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: <%= raw  "'"+survey.name+"'" %>,
+        data: <%= raw qts.map{|rs| rs.total_score.to_f*100/(rs.count.to_f*qts_max_score.to_f)} %>
+
+    }]
+});
+
+ })
+
+
+
+</script>
+
+
+

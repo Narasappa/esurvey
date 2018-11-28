@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  constituency_name: MyString
+  state_id: MyString
+
+two:
+  constituency_name: MyString
+  state_id: MyString

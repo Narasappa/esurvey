@@ -1,0 +1,3 @@
+
+alert("this form forgot password");
+$("#forgot-password").modal("hide")

@@ -1,0 +1,128 @@
+class SurveysController < ApplicationController
+  # GET /surveys
+  # GET /surveys.json
+  filter_access_to :all
+  def index
+    @surveys = Survey.all(:include=>[:questions])
+      @scale_based = Survey.scale_based
+      @merit_based = Survey.merit_based
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @surveys }
+    end
+  end
+
+
+
+ def listsurveyor
+  @survey = Survey.find(params[:id])
+  @survey_conducters = @survey.servey_conducters#(:include=>[:user.:mla_town])
+ end
+
+
+ def add_surveyor
+   @users = User.joins(:role).where("roles.title= 'surveyor'")
+   @survey = Survey.find(params[:id])
+   @mla_towns = MlaTown.find_all_by_mla_constituency_id(@survey.mla_constituency_id)
+    if @survey.servey_conducters.empty?
+   @mla_towns.each do |mla_town|
+   @survey.servey_conducters.build(:name=>mla_town.town_name,:mla_town_id=>mla_town.id)
+     end
+    else
+      remaining_id = @mla_towns.map(&:id)
+      already_added = @survey.servey_conducters.map(&:mla_town_id)
+      @mla_towns = MlaTown.find(remaining_id-already_added)
+      @mla_towns.each do |mla_town|
+         @survey.servey_conducters.build(:name=>mla_town.town_name,:mla_town_id=>mla_town.id)
+     end
+    end
+ end
+
+ def update_surveyor
+   @users = User.joins(:role).where("roles.title= 'surveyor'")
+   @survey = Survey.find(params[:id])
+   @survey.update_attributes(params[:survey])
+   redirect_to :action=>:listsurveyor,:id=>params[:id]
+end
+
+  # GET /surveys/1
+  # GET /surveys/1.json
+  def show
+    @survey = Survey.find(params[:id],:include=>[:questions])
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @survey }
+    end
+  end
+
+  # GET /surveys/new
+  # GET /surveys/new.json
+  def new
+    @survey = Survey.new
+    @merit_templates = MeritTemplate.all
+    @users = User.joins(:role).where("roles.title != 'surveyor'")
+
+    5.times do 
+       @survey.questions.build
+    end
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @survey }
+    end
+  end
+
+  # GET /surveys/1/edit
+  def edit
+    @users = User.joins(:role).where("roles.title != 'surveyor'")
+    @survey = Survey.find(params[:id])
+     @merit_templates = MeritTemplate.all
+  end
+
+  # POST /surveys
+  # POST /surveys.json
+  def create
+    @survey = Survey.new(params[:survey])
+     @merit_templates = MeritTemplate.all
+     @users = User.joins(:role).where("roles.title != 'surveyor'")
+    respond_to do |format|
+      if @survey.save
+        format.html { redirect_to @survey, notice: 'Survey was successfully created.' }
+        format.json { render json: @survey, status: :created, location: @survey }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @survey.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /surveys/1
+  # PUT /surveys/1.json
+  def update
+    @survey = Survey.find(params[:id])
+    @merit_templates = MeritTemplate.all
+    @users = User.joins(:role).where("roles.title != 'surveyor'")
+
+    respond_to do |format|
+      if @survey.update_attributes(params[:survey])
+        format.html { redirect_to @survey, notice: 'Survey was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @survey.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /surveys/1
+  # DELETE /surveys/1.json
+  def destroy
+    @survey = Survey.find(params[:id])
+    @survey.destroy
+
+    respond_to do |format|
+      format.html { redirect_to surveys_url }
+      format.json { head :no_content }
+    end
+  end
+end

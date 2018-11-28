@@ -1,0 +1,38 @@
+<div class="page-header">
+  <%= link_to merit_templates_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_merit_template_path(@merit_template), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h3 class="text-info"><u><b>Show Merit Template and It's Subjects</b></u></h3>
+  
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Template name:</dt>
+  <dd><%= @merit_template.template_name %></dd>
+
+</dl>
+ <div class="table-responsive">
+ <table class="table table-bordered dynamic">
+  <thead>
+    <tr class="bg-info">
+     <th>Subject Name </th>
+     <th> Name Marks</th>
+     <th>--</th>
+  </tr>
+  </thead>
+   <tbody>
+     <% @merit_template.merit_template_subjects.each_with_index do |merit_template_subject,index| %>
+       <tr> 
+         <td><%= merit_template_subject.subject_name %></td>
+         <td><%= merit_template_subject.subject_marks %></td>
+         <td><%= %> </td>
+       </tr>
+     <% end %>
+  </tbody>
+  </table>
+</div>

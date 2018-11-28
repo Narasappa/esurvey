@@ -1,0 +1,32 @@
+<div class="row">
+<div class="container">
+ <% @web_site_setting=WebSiteSetting.first %>
+   <div class="panel panel-default">
+    <div class="panel-heading"><h3 class ="text-center"style="color:<%=@web_site_setting.font_heading_color unless @web_site_setting.nil?%>"><b>HOME</b></h3></div>
+    <div class="panel-body"><p style="color:<%=@web_site_setting.font_color unless @web_site_setting.nil?%>">* Trust is the foundation of any long lasting relationship. And it is not built overnight. It requires time. It is the same with us.</p>
+<p style="color:<%=@web_site_setting.font_color unless @web_site_setting.nil?%>">* At <%= @company.company_name %>, we have built our reputation built on trust.</p>
+
+<p style="color:<%=@web_site_setting.font_color unless @web_site_setting.nil?%>">* <%= @company.company_name %> is the government registered chit
+funds company in the state of Karnataka, registered under “The Companies Act, 1982” bearing 
+CIN : <%=@company.cin_no unless @company.cin_no.nil?  %></p>
+
+<p style="color:<%=@web_site_setting.font_color unless @web_site_setting.nil?%>">* <%= @company.company_name %> started business with an intention to bring social control over Chit Fund business so as to protect the public from being exploited by unregistered/unorganized chit operators. That is our mission and the reason for our existence.</p>
+
+<p style="color:<%=@web_site_setting.font_color unless @web_site_setting.nil?%>">* The schemes under ‘<%= @company.company_name %>’ are designed to cater all income groups and all segments of the society. The main objective of the company is to provide need based financial plans to its customers.</p>
+ 			
+   </div>
+ </div>
+ </div>
+ </div>
+
+
+<br>
+<br>
+
+
+<style>
+p{
+	font-family: times;
+	font-size: 19px;
+}
+</style>

@@ -1,0 +1,2 @@
+$("select#interview_user_id").html("");
+$("select#interview_user_id").html("<%= escape_javascript options_from_collection_for_select(@users, :id, :email) %>");

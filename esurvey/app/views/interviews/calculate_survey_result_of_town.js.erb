@@ -1,0 +1,2 @@
+$("div#town_result").html("")
+$("div#town_result").append("<%= j render('calculate_survey_result_of_town',:survey_result=>@survey_result,:max_score=>@max_score,:survey=>@survey,:questions=>@questions,:qts=>@qts,:qts_max_score=>@qts_max_score) %>");

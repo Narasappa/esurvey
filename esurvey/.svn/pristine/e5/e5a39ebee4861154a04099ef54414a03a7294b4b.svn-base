@@ -1,0 +1,9 @@
+<div class="page-header">
+  <%= link_to political_party_users_url(@political_party), class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+ <h3 class="text-info"><u><b>New user</b></u></h3>
+</div>
+
+<%= render 'form' %>

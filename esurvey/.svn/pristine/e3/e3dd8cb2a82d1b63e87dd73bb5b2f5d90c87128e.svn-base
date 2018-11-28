@@ -1,0 +1,70 @@
+<div class="page-header">
+  <%= link_to surveys_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_survey_path(@survey), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+
+
+   <%= link_to 'view & add Sureveyor',{:action=>"listsurveyor",:id=>@survey.id},{ class: 'btn btn-primary'} %>
+  
+  <h2 class="text-info"><u><b>Add/Update surveyor</b></u></h2>
+
+</div>
+
+
+
+<div class="row">
+
+<%= form_for(@survey,:url=>{:action=>:update_surveyor} ,html: { class: "form-horizontal", role: "form" ,:method=>"post"}) do |f| %>
+<%= hidden_field_tag 'id',@survey.id %>
+<h3 class="text-danger text-left"><u><b>Town To be Surveyed</u></b></h3>
+  <div class="form-group">
+
+   <table class="table table-bordered dynamic">
+  <thead>
+    <tr class="bg-info">
+
+     <th>Town/Village Name </th>
+    <th>Surveyour</th>
+    <th>---</th>
+  </tr>
+  </thead>
+   <tbody>
+     <% @index=0 %>
+     <%= f.fields_for :servey_conducters do |builder| %>
+      <tr class="fields">
+          <td> 
+                <% if builder.object.new_record? %>
+              <%= builder.text_field :name, class: "form-control",:readonly=>true %>
+                <% else %>
+             <span class="glyphicon glyphicon-plus"></span><%= builder.text_field :name,:value => builder.object.mla_town.town_name, class: "form-control input-xs",:readonly=>true %>
+                <% end %>
+              <%= builder.text_field :mla_town_id, class: "form-control hide" %>        
+           </td>
+
+           <td> <%= builder.select :user_id,@users.map{|user| [user.email,user.id]},{},class: "form-control" %>
+
+           </td>
+           <td ><%= link_to_remove_fields "<span class='glyphicon glyphicon-remove btn btn-sm '></span>".html_safe, builder %>
+           </td>
+  </td>
+
+      </tr>
+    
+  <% end %>
+  </tbody>
+  </table>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit 'Add/Update', class: "btn btn-primary" %>
+    </div>
+  </div>
+
+<% end %>
+
+</div>  

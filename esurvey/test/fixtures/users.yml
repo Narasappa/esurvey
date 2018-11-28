@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  mobile_number: MyString
+  encrypted_password: MyString
+  salt: MyString
+  reset_password_code: MyString
+  reset_password_code_until: MyString
+  authentication_token: MyString
+  is_active: false
+  political_party: 
+
+two:
+  first_name: MyString
+  last_name: MyString
+  email: MyString
+  mobile_number: MyString
+  encrypted_password: MyString
+  salt: MyString
+  reset_password_code: MyString
+  reset_password_code_until: MyString
+  authentication_token: MyString
+  is_active: false
+  political_party: 

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  town_name: MyString
+  state_id: 1
+  mla_constituency_id: 1
+
+two:
+  town_name: MyString
+  state_id: 1
+  mla_constituency_id: 1

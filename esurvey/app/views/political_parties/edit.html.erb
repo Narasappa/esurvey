@@ -1,0 +1,17 @@
+<div class="page-header">
+  <%= link_to political_parties_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to @political_party, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Show
+  <% end %>
+  <%= link_to new_political_party_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Political party
+  <% end %>
+  <h3 class="text-info"><u><b> Editing  <%= @political_party.name %> Details</b></u></h3>
+</div>
+
+<%= render 'form' %>
